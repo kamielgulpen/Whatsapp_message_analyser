@@ -3,9 +3,9 @@ import re
 import dateparser
 
 
-def message_converter():
+def message_converter(file_name):
 
-    f = open("_chat.txt", "r",encoding="utf8")
+    f = open(, "r",encoding="utf8")
 
     years = []
     months = []
@@ -50,4 +50,7 @@ def message_converter():
     df.to_csv('messages.csv')
 
 if __name__ == "__main__":
-    message_converter()
+
+    file_name = ''
+
+    message_converter(file_name)
