@@ -1,3 +1,9 @@
+import pandas as pd
+
+def get_df():
+    return pd.read_csv('messages.csv')
+
+
 def order_dictionary(dictionary):
     
     return {k: v for k, v in sorted(dictionary.items(), key=lambda item: item[1])}

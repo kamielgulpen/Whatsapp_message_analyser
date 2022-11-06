@@ -7,14 +7,14 @@ import seaborn as sns
 from collections import Counter
 
 from utils import *
+
+
 # Based on http://www.clips.ua.ac.be/pages/sentiment-analysis-for-dutch
 # Documentation at http://www.clips.ua.ac.be/pages/pattern-nl#sentiment
 # Installation documentation can be found at https://github.com/clips/pattern
 
 # Import the sentiment analyse module from the pattern module
 from pattern.nl import sentiment
-
-df = pd.read_csv('messages.csv')
 
 
 def sended_messages_count(df, names):
@@ -33,23 +33,16 @@ def sended_messages_count(df, names):
     plt.tight_layout()
     plt.show()
 
-
-# print(dateparser.parse(df['date'][0]))
 def distributions(df):
-    sns.histplot(x='hour', data=df)
-    plt.show()
 
-    sns.histplot(x='year', data=df)
-    plt.show()
+    times = ['hour', 'year', 'day']
 
-    sns.histplot(x='month', data=df)
-    plt.show()
+    for time in times:
 
-    sns.histplot(x='day', data=df)
-    plt.show()
-
-    print(df[df['year'] == 2021])
-
+        sns.histplot(x=time, data=df)
+        plt.tight_layout()
+        plt.savefig(f'time_distributions/{time}_message_distribution.jpg')
+        plt.close()
 
 def word_count(df, names, word):
 
@@ -69,11 +62,8 @@ def word_count(df, names, word):
         word_counts = Counter(cap_words)[word] #counts the number each time a word appears
 
         word_count_pp[name] = word_counts
-
-        print(word_count_pp)
+        
     return order_dictionary(word_count_pp)
-
-    
 
 def sentiment_analysis(df, names):
     
@@ -102,9 +92,12 @@ def sentiment_analysis(df, names):
 
 
 
-names = get_names(df)
+if __name__ == "__main__":
 
+    df = get_df()
 
-print(sentiment_analysis(df, names))
-print(word_count(df, names, 'KANKER'))
-distributions(df)
+    names = get_names(df)
+
+    word_count(df, names, "nice")
+    distributions(df)
+    sentiment_analysis(df, names)
