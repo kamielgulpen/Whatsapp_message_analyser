@@ -5,6 +5,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from collections import Counter
+
+from utils import *
 # Based on http://www.clips.ua.ac.be/pages/sentiment-analysis-for-dutch
 # Documentation at http://www.clips.ua.ac.be/pages/pattern-nl#sentiment
 # Installation documentation can be found at https://github.com/clips/pattern
@@ -14,19 +16,6 @@ from pattern.nl import sentiment
 
 df = pd.read_csv('messages.csv')
 
-def order_dictionary(dictionary):
-    
-    return {k: v for k, v in sorted(dictionary.items(), key=lambda item: item[1])}
-
-
-def get_names(df):
-
-        
-    names_tmp = df.name.value_counts().rename_axis('unique_values').reset_index(name='counts')
-
-    names = names_tmp[names_tmp['counts'] > 10].unique_values.to_list()
-
-    return names
 
 def sended_messages_count(df, names):
 
@@ -116,9 +105,6 @@ def sentiment_analysis(df, names):
 names = get_names(df)
 
 
-# print(sentiment_analysis(df, names))
-
-
+print(sentiment_analysis(df, names))
 print(word_count(df, names, 'KANKER'))
-
-# distributions(df)
+distributions(df)
