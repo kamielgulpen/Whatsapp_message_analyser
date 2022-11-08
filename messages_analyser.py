@@ -44,10 +44,10 @@ def distributions(df):
         plt.savefig(f'time_distributions/{time}_message_distribution.jpg')
         plt.close()
 
-def word_count(df, names, word):
+def word_count(df, names, counted_word):
 
     word_count_pp = {}
-
+    counted_word = counted_word.upper()
     for name in names:
         all_messages = ''
         # print(df)
@@ -59,8 +59,8 @@ def word_count(df, names, word):
 
         cap_words = [word.upper() for word in words] #capitalizes all the words
 
-        word_counts = Counter(cap_words)[word] #counts the number each time a word appears
-
+        word_counts = Counter(cap_words)[counted_word] #counts the number each time a word appears
+        
         word_count_pp[name] = word_counts
         
     return order_dictionary(word_count_pp)
@@ -98,6 +98,6 @@ if __name__ == "__main__":
 
     names = get_names(df)
 
-    word_count(df, names, "nice")
+    print(word_count(df, names, "ik"))
     distributions(df)
     sentiment_analysis(df, names)
