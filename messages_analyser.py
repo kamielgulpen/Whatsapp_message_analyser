@@ -18,29 +18,41 @@ from pattern.nl import sentiment
 
 
 def sended_messages_count(df, names):
-
+    
+    color=['#2AA683', '#C9040C' ,'#C09209', '#28560C', '#FC1833']
     amounts = {name: (len(df[df['name'] == name])) for name in names}
 
     amounts = order_dictionary(amounts)
   
     total = sum(amounts.values())
     print(total)
-    print(max(amounts.values()))
+    print(total)
+    personen = [ ' '.join(i.split(' ')[1:3]) for i in amounts.keys()]
+
+    personen2 = [i + 1 for i in range(len (personen))]
     plt.xlabel('Personen')
     plt.ylabel('Berichten')
-    plt.bar(amounts.keys(), amounts.values())
-    plt.xticks(rotation = 45) # 
+    
+
+    plt.bar(personen2, amounts.values(), color = color)
+    plt.xticks(rotation = 90) # 
     plt.tight_layout()
+    plt.xticks(personen2)
+    plt.savefig('sended_messages2.jpg')
+    # plt.savefig('sended_messages2.jpg')
+    
     plt.show()
 
 def distributions(df):
-
-    times = ['hour', 'year', 'day']
+    color=['#2AA683', '#C9040C' ,'#C09209', '#28560C', '#FC1833']
+    times = ['month', 'year', 'day', 'hour']
 
     for time in times:
-
-        sns.histplot(x=time, data=df)
+        amounts = {(len(df[df[time] == name])): name for name in df[time].unique()}
+        plt.bar(x=order_dictionary(amounts).values(), height=order_dictionary(amounts).keys(), color = color)
+        plt.xticks(list(order_dictionary(amounts).values()))
         plt.tight_layout()
+        
         plt.savefig(f'time_distributions/{time}_message_distribution.jpg')
         plt.close()
 
@@ -88,6 +100,17 @@ def sentiment_analysis(df, names):
     
     sentiment_score = order_dictionary(sentiment_score)
 
+    personen = [ ' '.join(i.split(' ')[1:3]) for i in sentiment_score.keys()]
+
+    color=['#2AA683', '#C9040C' ,'#C09209', '#28560C', '#FC1833']
+
+    print(personen)
+    plt.xlabel('Personen')
+    plt.ylabel('Berichten')
+    plt.bar(personen, sentiment_score.values(), color = color)
+    plt.xticks(rotation = 90) # 
+    plt.tight_layout()
+    plt.show()
     return sentiment_score
 
 
@@ -98,6 +121,8 @@ if __name__ == "__main__":
 
     names = get_names(df)
 
-    print(word_count(df, names, "ik"))
+    # print(word_count(df, names, "photo"))
+
     distributions(df)
-    sentiment_analysis(df, names)
+    # print(sentiment_analysis(df, names))
+    # sended_messages_count(df, names)

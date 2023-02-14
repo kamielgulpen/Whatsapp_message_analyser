@@ -5,7 +5,7 @@ import dateparser
 
 def message_converter(file_name):
 
-    f = open(, "r",encoding="utf8")
+    f = open(file_name, "r",encoding="utf8")
 
     years = []
     months = []
@@ -51,6 +51,6 @@ def message_converter(file_name):
 
 if __name__ == "__main__":
 
-    file_name = ''
+    file_name = 'gekke_team_chat.txt'
 
     message_converter(file_name)
